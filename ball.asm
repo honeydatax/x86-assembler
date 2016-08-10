@@ -18,9 +18,11 @@ jz @myloop2
 
 MOV BX,0
 
+push bx
+
 rrotina:
       
-push bx
+
         mov ax,cs
         mov dx,ax
         clc 
@@ -50,14 +52,16 @@ call back
 xor ebx,ebx
 pop bx
 clc
-add BX,3200
+add BX,3210
 push bx
+
 CMP eBX,58000
 jb @cq
 pop ax
 xor BX,BX
 push bx
 @cq:
+
 call offsetss
 
 
