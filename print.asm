@@ -1,12 +1,13 @@
 jmp head
 
-c1 resd 1
+c1 resw 1
 ad1 resd 1
 srce resw 1
 values resw 1
 xx resw 1
 yy resw 1
 NN resw 1
+msg db "im love marina"
 NOP
 NOP 
 
@@ -26,49 +27,39 @@ call exit
 
 proc main
 
-mov dword c1,80
-mov dword ad1,0
-mov word srce,0fh
-mov word values,2
+mov word c1,14
+
+
+mov word xx,0
 
 mov word yy,0
 
-
-
-FFF:
-mov word xx,0
-fff1:
-
-push xx
-push yy
-call gotoxy
+mov AX,CS
+mov BX,offset msg
+push ax
+push bx
+call a32
 add sp,2*2
 
 
-inc eax
-mov ad1,eax
 
+mov dword ad1,eax
 
+rotinas:
+
+push word xx
+push word yy
 push dword ad1
-push dword c1
-push word srce
-push word values
-call copy
-add sp,4*2+2*2
+push word c1
+call print
+add sp,3*2+4
 
-
-add srce,10h
-CMP srce,20h
-JB nlin
-mov srce,0fh
-nlin:
-clc 
-add xx,10
-CMP xx, 70
-JB fff1
+inc xx
 inc yy
-CMP yy,23
-JB fff
+CMP yy,22
+jb  rotinas
+
+
 
 endproc
 
@@ -76,7 +67,7 @@ endproc
 
 call exit 
 
- MSG dB "marina"
+
 
 proc exit
 int 20h
@@ -85,12 +76,7 @@ endproc
 
 
 proc fillw(dword adress,dword counter,word value)
-push AX
-push BX
-push CX
-push DX
-push si
-push di
+
 push DS
 XOR AX,AX
 mov DS,ax
@@ -107,24 +93,14 @@ CMP ecx,0
 jnz rotina
 
 pop ds
-pop di 
-pop si
-pop dx
-pop CX 
-pop BX
-pop ax
+
 
 endproc
 
 
 
 proc step(dword adress,dword source ,dword counter,word st)
-push AX
-push BX
-push CX
-push DX
-push si
-push di
+
 push DS
 XOR AX,AX
 mov DS,ax
@@ -145,24 +121,14 @@ CMP ecx,0
 jnz steprotina
 
 pop ds
-pop di 
-pop si
-pop dx
-pop CX 
-pop BX
-pop ax
+
 
 endproc
 
 
 
 proc copy(dword adress, dword counter,word source,word st)
-push AX
-push BX
-push CX
-push DX
-push si
-push di
+
 push DS
 XOR AX,AX
 mov DS,ax
@@ -183,21 +149,12 @@ CMP ecx,0
 jnz copyrotina
 
 pop ds
-pop di 
-pop si
-pop dx
-pop CX 
-pop BX
-pop ax
+
 
 endproc
 
 proc gotoxy(word x,word y)
-push BX
-push CX
-push DX
-push si
-push di
+
 push DS
 mov AX,y
 mov BX,160
@@ -220,11 +177,43 @@ add eax ,ebx
 
 
 pop ds
-pop di 
-pop si
-pop dx
-pop CX 
-pop BX
+
 
 endproc
 
+
+proc print(word x,word y, dword adress,word counter)
+
+push word x
+push word y
+call gotoxy
+add sp,2*2
+
+mov ebx,eax
+
+mov AX,counter
+shl eax,16
+shr eax,16
+
+
+push  ebx
+push dword adress
+push eax
+push word 2
+call step
+add sp,4*3+2
+
+endproc
+
+
+proc a32(word seg,word offs)
+mov AX,seg
+mov BX,offs
+shl eax,16
+shr eax,12
+shl ebx,16
+shr ebx,16
+CLC 
+add eax,ebx
+
+endproc
