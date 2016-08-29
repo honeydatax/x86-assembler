@@ -1,202 +1,104 @@
-hh equ     10
-ww equ     10
-h  equ     offset mempal
-w  equ     256*3
-ccolor  equ     1
-x       equ     0 + w
-y       equ     0 + h
-x2      equ     319 - w
-y2      equ     199 - h
-
-call graphic
 @myloop2:
 call check
         cmp al,0
 jz @myloop2
 ;
+mov ax,8000
+call freq
 
-call pals
-        
-        mov ax,cs
-        mov dx,ax
-        clc 
-        add dx,1000h
-        ;define ds:0=bitmap
-        ;define ds=0xb100
-        
-        mov ds,dx
 
-        mov cx,15   ;color back screen
-call back
-  
-        
-
-        
-        
-        
-        
-        
-        mov di,256
-        mov ax,0
-        mov bx,0
-        mov dx,10
-        mov bp,10
-        mov cx,0
+rrotina:
+mov ecx,esi
+rotina:
+        in al,60h
+        cmp al,1
+jz rotinas
+        cmp al,127
+ja rotina
+mov bp,offset cicle
+xor ah,ah
+call str
+call on
+mov dx,offset cicle
+call print 
+rotina80:
+dec ecx
+cmp ecx,0
+jnz rotina80
         
 
-@myll:
-
-;write a box on a bitmap memory
-call box
-        
- clc
-        add ax,ww
-        clc
-        add dx,ww
-        
-cmp ax,319
-jb @axb
-mov ax,0
-mov dx,10
-
-       clc
-        add bx,hh
-
-
-        clc
-        add bp,hh
-        
-        
-@axb:
- 
-
-inc cx
-
-        dec di
-   jnz @myll
-@bxa:
-
-
-         mov ax,AV
-         mov es,ax
-         mov cx,320*200
-         xor bp,bp
-         xor bx,bx
-;copy bitmap to windows screen
-call copy
-
-
-
-         mov ax,cs
-         mov ds,ax
-         mov es,ax
-
-call show
-
-
-@myloop:
+@myloop212:
 call check
         cmp al,0
-jnz @myloop
-@myloop3:
+jz @myloop212
 
-         
-call hide
-call text
+
+
+call off        
+jmp rrotina
+rotinas:
+
+
+call off
 call exit
 
 ;.include lib.inc
 msg     db      "EXIT"
 
 
-pals:
-mov bp,offset mempal
-
-
-mov al,0
-mov ah,0
-mov bl,0
-mov bh,0
-
-mov cx,0
-
-
-pals4:
-mov bh,cl
-mov ah,cl
-mov bl,cl
-and bh,11000000b
-and ah,00000111b
-and bl,00111000b
-clc
-shl ah,3
-clc
-shr bh,2
-clc
-;shr bl,0
-clc
-call palsc1 
-inc cx
-cmp cx,256 
-jb pals4
-
-
-
-
-
-mov cx,3
-mov bp,h
-mov al,0
-
-pals9:
-mov cs:[bp],al
-inc bp
-dec cx
-cmp cx,0 
-jnz pals9
-
-mov cx,3 
-mov bp,h+(15*3)
-mov al,63
-
-pals10:
-mov cs:[bp],al
-inc bp
-dec cx
-cmp cx,0 
-jnz pals10
-
-
-call palso1
+freq:
+push ax
+mov al,10110110b
+out 43h,al
+pop ax
+out 42h,al
+mov al,ah
+out 42h,al
 ret
 
 
-palsc1:
-mov al,ah 
-mov cs:[bp],al
-inc bp
-mov al,bl
-mov cs:[bp],al
-inc bp
-mov al,bh
-mov cs:[bp],al
-inc bp
+on:
+in al,61h
+or al,00000011b
+out 61h,al
 ret
 
-palso1:
-mov bp,h
-mov dx,03c8h
-mov al,0
-out dx,al
-inc dx
-palso2:
-mov al,cs:[bp]
-out dx,al
-inc bp
-cmp bp,h+w+1
-jb palso2
+
+off:
+in al,61h
+and al,11111100b
+out 61h,al
 ret
 
+
+
+t2timer:
+call clock
+MOV BX,ax
+@c9:
+call clock
+CMP ax,BX
+jz @c9
+inc bx
+cmp bx,0
+jz t2timer
+
+@c1:
+inc esi
+call clock
+CMP ax,BX
+ja @cc1
+CMP ax,BX
+jz @c1
+@cc1:
+mov eax,esi
+xor ecx,ecx
+xor edx,edx
+mov ebx,12
+idiv ebx
+mov esi,eax
+
+ret
 
 
 AV      equ 40960
@@ -440,7 +342,7 @@ clock:
         mov ax,64
         mov ds,ax
         mov bp,108
-        mov al,ds:[bp]
+        mov ax,ds:[bp]
 
         pop ds
         pop bx
@@ -520,6 +422,67 @@ copy:
         pop bp
         ret
 
-mempal db 0
+str:
+        push bp
+        push dx
+        push cx
+        push bx
+        push ax
+        
+        xor cx,cx
+        xor dx,dx
+        mov bx,10000
+        clc
+        idiv bx
+        add al,30h
+        mov ds:[bp],al
+        inc bp
+        mov ax,dx
+        
+        
+        xor cx,cx
+        xor dx,dx
+        mov bx,1000
+        clc
+        idiv bx
+        add al,30h
+        mov ds:[bp],al
+        inc bp
+        mov ax,dx
 
+        
+        xor cx,cx
+        xor dx,dx
+        mov bx,100
+        clc
+        idiv bx
+        add al,30h
+        mov ds:[bp],al
+        inc bp
+        mov ax,dx
+
+        xor cx,cx
+        xor dx,dx
+        mov bx,10
+        clc
+        idiv bx
+        add al,30h
+        mov ds:[bp],al
+        inc bp
+        mov ax,dx
+        
+        add al,30h
+        mov ds:[bp],al
+        
+        
+
+
+        pop ax
+        pop bx
+        pop cx
+        pop dx
+        pop bp
+        ret
+
+cicle db "00000.=$",13,10
 

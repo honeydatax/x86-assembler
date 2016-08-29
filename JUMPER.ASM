@@ -1,22 +1,32 @@
-hh equ     10
-ww equ     10
-h  equ     offset mempal
-w  equ     256*3
+
+h  equ     10
+w  equ     10
 ccolor  equ     1
 x       equ     0 + w
 y       equ     0 + h
-x2      equ     319 - w
-y2      equ     199 - h
+x2      equ     100
+y2      equ     100
+
 
 call graphic
+call show
 @myloop2:
 call check
         cmp al,0
 jz @myloop2
 ;
 
-call pals
-        
+mov ax,5500
+call freq
+mov ax,1
+push ax
+push ax
+push ax
+push ax
+
+rrotina:
+      
+
         mov ax,cs
         mov dx,ax
         clc 
@@ -28,53 +38,89 @@ call pals
 
         mov cx,15   ;color back screen
 call back
+
+
+
   
+        mov ax,cs
+        mov dx,ax
+        clc 
+        add dx,1000h
+        ;define ds:0=bitmap
+        ;define ds=0xb100
         
+        mov ds,dx
 
+call off
         
-        
-        
-        
-        
-        mov di,256
-        mov ax,0
-        mov bx,0
-        mov dx,10
-        mov bp,10
-        mov cx,0
-        
+pop si
+pop di
+pop dx
+pop cx
+cmp cx,0
+jnz xadd 
+clc
+sub si,5
+jmp xadde
+xadd:
+clc
+add si,5
+xadde:
+cmp dx,0
+jnz yadd 
+clc
+sub di,5
+jmp yadde
+yadd:
+clc
+add di,5
+yadde:
 
-@myll:
-
-;write a box on a bitmap memory
-call box
-        
- clc
-        add ax,ww
-        clc
-        add dx,ww
-        
-cmp ax,319
-jb @axb
-mov ax,0
-mov dx,10
-
-       clc
-        add bx,hh
-
-
-        clc
-        add bp,hh
-        
-        
-@axb:
- 
-
+cmp si,0f000h
+jb xa
+xor cx,cx
 inc cx
+mov si,1
+call on
+xa:
+cmp si,310
+jb xb
+xor cx,cx
+mov si,309
+call on
+xb:
+push cx
 
-        dec di
-   jnz @myll
-@bxa:
+cmp di,0f000h
+jb ya
+xor dx,dx
+inc dx
+mov di,1
+call on
+ya:
+cmp di,190
+jb yb
+xor dx,dx
+mov di,189
+call on
+yb:
+
+push dx
+push di
+push si
+
+mov ax,320
+xor cx,cx
+xor dx,dx
+mov bx,di
+clc
+imul bx
+mov bx,si
+clc
+add ax,bx
+mov bx,ax
+clc
+call offsetss
 
 
          mov ax,AV
@@ -82,8 +128,10 @@ inc cx
          mov cx,320*200
          xor bp,bp
          xor bx,bx
+call hide
 ;copy bitmap to windows screen
 call copy
+call show
 
 
 
@@ -91,17 +139,53 @@ call copy
          mov ds,ax
          mov es,ax
 
-call show
 
+call clock
+MOV BX,ax
+MOV ax,1
+clc 
+add BX,ax 
+cmp bx,0
+jnz @c9:
+inc bx
+@c9:
+push ax
+push bx
+call check
+        cmp al,0
+jz @c1
+pop bx
+pop ax
+call clock
+CMP ax,BX
+ja @c9
+
+
+@c1:
+call clock
+push ax
+push bx
+call check
+        cmp al,0
+jz @myloop3
+pop bx
+pop ax
+call clock
+CMP ax,BX
+jb @c1
+
+jmp rrotina
 
 @myloop:
 call check
         cmp al,0
 jnz @myloop
 @myloop3:
-
-         
-call hide
+pop ax
+pop ax 
+pop ax
+pop ax
+ call hide       
 call text
 call exit
 
@@ -109,94 +193,43 @@ call exit
 msg     db      "EXIT"
 
 
-pals:
-mov bp,offset mempal
-
-
-mov al,0
-mov ah,0
-mov bl,0
-mov bh,0
-
-mov cx,0
-
-
-pals4:
-mov bh,cl
-mov ah,cl
-mov bl,cl
-and bh,11000000b
-and ah,00000111b
-and bl,00111000b
-clc
-shl ah,3
-clc
-shr bh,2
-clc
-;shr bl,0
-clc
-call palsc1 
-inc cx
-cmp cx,256 
-jb pals4
 
 
 
 
-
-mov cx,3
-mov bp,h
-mov al,0
-
-pals9:
-mov cs:[bp],al
-inc bp
-dec cx
-cmp cx,0 
-jnz pals9
-
-mov cx,3 
-mov bp,h+(15*3)
-mov al,63
-
-pals10:
-mov cs:[bp],al
-inc bp
-dec cx
-cmp cx,0 
-jnz pals10
+offsets  db 15,15,15,01,01,01,01,15,15,15
+o1          db 15,15,01,01,01,01,01,01,15,15
+o2          db 15,01,01,01,01,01,01,01,01,15
+o3          db 15,01,01,01,01,01,01,01,01,15
+o4          db 01,01,01,01,01,01,01,01,01,01
+o5          db 01,01,01,01,01,01,01,01,01,01
+o6          db 15,01,01,01,01,01,01,01,01,15
+o7          db 15,01,01,01,01,01,01,01,01,15
+o8          db 15,15,01,01,01,01,01,01,15,15
+o9          db 15,15,15,01,01,01,01,15,15,15
 
 
-call palso1
+offsetss:
+MOV BP,offset offsets  
+MOV CX,10
+offset1:
+MOV DX,10
+
+offset2:
+MOV al,CS:[BP]
+MOV DS:[bx],al
+inc BX
+inc BP
+dec DX
+CMP DX,0
+jnz offset2
+offset3:
+clc 
+add BX,310
+dec CX
+jnz offset1
+offset4:
 ret
-
-
-palsc1:
-mov al,ah 
-mov cs:[bp],al
-inc bp
-mov al,bl
-mov cs:[bp],al
-inc bp
-mov al,bh
-mov cs:[bp],al
-inc bp
-ret
-
-palso1:
-mov bp,h
-mov dx,03c8h
-mov al,0
-out dx,al
-inc dx
-palso2:
-mov al,cs:[bp]
-out dx,al
-inc bp
-cmp bp,h+w+1
-jb palso2
-ret
-
 
 
 AV      equ 40960
@@ -440,7 +473,7 @@ clock:
         mov ax,64
         mov ds,ax
         mov bp,108
-        mov al,ds:[bp]
+        mov ax,ds:[bp]
 
         pop ds
         pop bx
@@ -520,6 +553,32 @@ copy:
         pop bp
         ret
 
-mempal db 0
 
+freq:
+push ax
+mov al,10110110b
+out 43h,al
+pop ax
+out 42h,al
+mov al,ah
+out 42h,al
+ret
+
+
+on:
+push ax
+in al,61h
+or al,00000011b
+out 61h,al
+pop ax
+ret
+
+
+off:
+push ax
+in al,61h
+and al,11111100b
+out 61h,al
+pop ax
+ret
 
