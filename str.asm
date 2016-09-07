@@ -57,7 +57,7 @@ mov xx,1
 rot1:
 
 push word px
-push offset ppack 
+push dword ad1
 call str
 
 
@@ -517,20 +517,23 @@ push dx
 endproc
 
 
-proc STR(word value ,word addres)
+nnible dB "01234567890ABCDEF",0,0,0,0
+
+
+proc STR(word value ,dword addres)
 push ds
-push CS
+push word 0
 pop ds
 mov AX,value
-mov si,addres
+mov esi,addres
        xor cx,cx
         xor dx,dx
         mov bx,10000
         clc
         idiv bx
         add al,30h
-        mov ds:[si],al
-        inc si
+        mov ds:[esi],al
+        inc esi
         mov ax,dx
         
         
@@ -540,8 +543,8 @@ mov si,addres
         clc
         idiv bx
         add al,30h
-        mov ds:[si],al
-        inc si
+        mov ds:[esi],al
+        inc esi
         mov ax,dx
 
         
@@ -551,8 +554,8 @@ mov si,addres
         clc
         idiv bx
         add al,30h
-        mov ds:[si],al
-        inc si
+        mov ds:[esi],al
+        inc esi
         mov ax,dx
 
         xor cx,cx
@@ -561,17 +564,17 @@ mov si,addres
         clc
         idiv bx
         add al,30h
-        mov ds:[si],al
-        inc si
+        mov ds:[esi],al
+        inc esi
         mov ax,dx
         
         add al,30h
-        mov ds:[si],al
+        mov ds:[esi],al
 pop ds
 pop DX
 pop BX
 CLC
-add sp,4
+add sp,6
 push BX
 push dx
 endproc        
@@ -579,7 +582,7 @@ endproc
 
 
 
-nnible dB "01234567890ABCDEF",0,0,0,0
+
 endf dB 90h
 
 
