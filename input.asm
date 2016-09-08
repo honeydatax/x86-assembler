@@ -631,10 +631,10 @@ CMP al,32
 JB input1
 
 CMP cx,counter
-jz input2
+jz input1
 
 CMP CX,counter
-ja input2
+ja input1
 
 
 
