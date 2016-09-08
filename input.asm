@@ -583,6 +583,17 @@ push DS
 
 mov AX,0
 mov ds,ax
+
+
+mov AX,x
+mov dX,y
+
+
+push AX
+push dX
+call cursor
+
+
 mov edi,address
 mov BX,counter
 mov AX,x
@@ -610,10 +621,10 @@ jz input2
 CMP al,32
 JB input1
 
-CMP cx,bx
+CMP cx,counter
 jz input2
 
-CMP CX,BX
+CMP CX,counter
 ja input2
 
 
@@ -629,6 +640,15 @@ push CX
 push esi
 mov AX,x
 mov dX,y
+clc
+add AX,cx
+
+push AX
+push dX
+call cursor
+
+mov AX,x
+mov dX,y
 mov BX,counter
 mov edi,address
 
@@ -637,6 +657,7 @@ push dX
 push edi
 push BX
 call print
+
 
 pop esi
 POp CX
