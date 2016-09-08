@@ -616,7 +616,16 @@ CMP al,13
 jz input2
 
 CMP al,8
-jz input2
+jnz input4
+CMP CX,0
+jz input4
+dec CX
+dec esi
+mov al,32
+mov DS:[esi],al
+jmp input6
+
+input4:
 
 CMP al,32
 JB input1
@@ -634,7 +643,7 @@ mov DS:[esi],al
 inc CX
 inc esi
 
-
+input6:
 
 push CX
 push esi
