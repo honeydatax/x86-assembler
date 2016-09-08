@@ -943,6 +943,10 @@ mov esi,source
 
 push word 0
 
+CMP CX,0
+jz number10
+
+
 number1:
 mov ah,'0'
 mov al,DS:[esi]
@@ -971,6 +975,8 @@ inc di
 dec CX
 CMP CX,0
 jnz number1
+
+number10:
 
 pop ax
 
