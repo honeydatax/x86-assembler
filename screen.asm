@@ -3,7 +3,7 @@ c1 resw 1
 c2 resw 1
 addrs resw 1
 start:
-push word 13h
+push word 12h
 call screen
 
 mov word c1,255
