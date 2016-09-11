@@ -18,9 +18,27 @@ dec c1
 CMP c1,0
 jnz rotina
 
+push ds
+mov BX,268
+mov AX,0
+mov DS,AX
+mov AX,0000
+mov DS:[BX],AX
+inc bx
+inc bx
+mov AX,0f000h
+mov DS:[BX],AX
+pop ds
+
+
 
 push offset endf
 call print
+
+
+mov AX,0
+int 16h
+
 
 call exit
 
