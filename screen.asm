@@ -1,5 +1,6 @@
 jmp start
 c1 resw 1
+c2 resw 1
 addrs resw 1
 start:
 push word 0
@@ -11,7 +12,9 @@ mov word addrs,offset endf
 
 rotina:
 mov BX,addrs
+
 mov AX,c1
+
 mov CS:[BX],al
 inc addrs
 dec c1
@@ -19,7 +22,7 @@ CMP c1,0
 jnz rotina
 
 push ds
-mov BX,268
+mov BX,124
 mov AX,0
 mov DS,AX
 mov AX,0000
