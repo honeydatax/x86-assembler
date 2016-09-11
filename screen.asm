@@ -13,7 +13,7 @@ rotina:
 mov BX,addrs
 mov AX,c1
 mov CS:[BX],al
-inc bx
+inc addrs
 dec c1
 CMP c1,0
 jnz rotina
