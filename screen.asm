@@ -3,7 +3,7 @@ c1 resw 1
 c2 resw 1
 addrs resw 1
 start:
-push word 0
+push word 13h
 call screen
 
 mov word c1,255
@@ -22,10 +22,10 @@ CMP c1,0
 jnz rotina
 
 push ds
-mov BX,124
+mov BX,43h*4
 mov AX,0
 mov DS,AX
-mov AX,0000
+mov AX,0FA6Eh
 mov DS:[BX],AX
 inc bx
 inc bx
