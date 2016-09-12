@@ -48,24 +48,16 @@ mov word c3,23
 mov  px ,0
 mov py,0
 
-call cls
+
+mov AX,12h
+int 10h
 
 push word 0f000h
- push word 0000h
+ push word 0FA6Eh
 push word 43h
 call setvect
 
 
-
-push CS
-push offset endf
-call a32
-pop dword ad1
-
-
-push DS
-mov AX,0
-mov DS,ax
 
 
 mov word c1,254
@@ -80,14 +72,12 @@ dec c1
 CMP c1,0
 jnz  rsrotina
 
-pop DS
 
 
-push word 0
-push word 0
-push dword ad1
-push word 254
-call print
+mov DX,offset endf
+mov ah,9
+int 21h
+
 
 push 50
 call ssleep
