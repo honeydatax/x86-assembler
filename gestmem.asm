@@ -66,7 +66,7 @@ push DS
 mov AX,0
 mov DS,ax
 mov ebx,11fffah
-mov eax,12000h
+mov eax,120000h
 mov DS:[ebx],eax
 
 pop ds
