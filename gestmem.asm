@@ -17,8 +17,7 @@ pop add1
 
 push dword add1
 push dword c1
-push word 1h
-call fillb
+call clear
 
 
 push dword c2
@@ -29,9 +28,15 @@ pop add2
 
 push dword add2
 push dword c2
-push word 2h
-call fillb
+call clear
 
+
+
+push dword add1
+call free 
+
+push dword add2
+call free 
 
 
 int 20h
@@ -55,7 +60,7 @@ jnz fill1
 pop ds
 pop dx
 pop bx
-add sp,2*2+4
+add sp,2*4+2
 push bx
 push dx
 endproc 
@@ -78,18 +83,63 @@ mov AX,0
 mov DS,ax
 mov ebx,11fffah
 mov eax,DS:[ebx]
+mov esi,6
 mov edx,size
 CLC
+add edx,esi
+mov DS:[eax],edx
+CLC
 add edx,eax
+CLC
+
 mov DS:[ebx],edx
+inc eax
+inc eax
+inc eax
+inc eax
+mov BL,'M'
+inc eax
 
 pop ds
 
 pop dx
 pop bx
-add sp,2
+add sp,4
 push eax
 push bx
 push dx
 
+endproc
+
+proc free(dword address)
+push DS
+mov AX,0
+mov DS,ax
+
+mov ebx,address
+dec ebx
+mov al,'F'
+mov DS:[ebx],al
+pop ds
+
+pop dx
+pop bx
+add sp,4
+push eax
+push bx
+push dx
+endproc
+
+proc clear(dword address,dword count)
+
+push dword address
+push dword count
+push word 0h
+call fillb
+
+pop dx
+pop bx
+add sp,2*4
+push bx
+push dx
 endproc
