@@ -27,6 +27,12 @@ proc print(word address)
 mov DX,address
 mov ah,9
 int 21h
+
+pop DX
+pop BX
+add sp,2
+push BX
+push dx
 endproc 
 
 
