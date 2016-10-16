@@ -1,0 +1,32 @@
+jmp init
+cchar resb 1
+char1 resb 1
+char2 resb 1
+init:
+mov cchar,'A'
+mov char2,13
+mov char1,10
+ffor:
+mov al,cchar
+call printf
+mov al,char2
+call printf
+mov al,char1
+call printf
+inc cchar
+cmp cchar,'H'
+jb ffor
+
+call exit
+
+exit:
+int 20h
+ret
+
+printf:
+
+xor bh,bh
+mov bl,70
+mov ah,0eh
+int 10h
+ret
