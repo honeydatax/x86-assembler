@@ -23,16 +23,22 @@ pop ds
 cmp ax,0ffffh
 jz error1:
 push ds
-
+push es
 
 mov ax,cs
 mov bx,2000h
 clc
 add ax,bx
 mov ds,ax
+mov bx,1000h
+clc 
+add ax,bx
+mov es,ax
+
 mov ax,cs
 mov si,offset file2
 call save13
+pop es
 pop ds
 cmp ax,0ffffh
 jz error1:
@@ -740,6 +746,7 @@ push di
 push si
 push bp
 push ds
+push es
 jmp save139
 save13bit resb 1
 save13w   resw 1
@@ -847,17 +854,17 @@ mov ax,ds:[si]
 mov cs:save13start,ax
 mov di,0
 mov al,'X'
-mov ds:[di],al
+mov es:[di],al
 inc di
 mov al,'Y'
-mov ds:[di],al
+mov es:[di],al
 inc di
 mov ax,cs:save13w
-mov ds:[di],ax
+mov es:[di],ax
 inc di
 inc di
 mov ax,cs:save13h
-mov ds:[di],ax
+mov es:[di],ax
 mov bh,cs:save13bit
 mov si,cs:save13start
 mov di,cs:save1313size
@@ -880,11 +887,11 @@ shr ah,2
 shr bl,5
 or al,ah
 or al,bl
-mov ds:[di],al
+mov es:[di],al
 dec di
 dec cs:save13xcopy
 cmp cs:save13xcopy,0
-jnz cs:save1390
+jnz save1390
 clc
 cmp bh,0
 jz save1392
@@ -901,18 +908,22 @@ mov ax,cs:save13x
 mov ds,ax
 call creat16
 jc save13125
-pop ds 
 mov di,ax
+mov ax,es
+mov ds,ax
 mov si,0
 mov cx,cs:save1313size
 call write16
+pop ds 
 call close16
 jmp save1313
 save13125:
+pop es
 pop ds
 save1312:
 mov ax,0ffffh
 save1313:
+pop es
 pop ds
 pop bp
 pop si

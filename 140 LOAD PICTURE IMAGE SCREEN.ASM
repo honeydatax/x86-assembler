@@ -596,8 +596,8 @@ drawbitmapstart resw 1
 drawbitmappoint resw 1
 drawbitmapreturn resw 1
 drawbitmap9:
-mov drawbitmapx,ax
-mov drawbitmapy,bx
+mov cs:drawbitmapx,ax
+mov cs:drawbitmapy,bx
 mov si,0
 mov al,ds:[si]
 cmp al,'B'
@@ -647,10 +647,10 @@ inc si
 mov eax,ds:[si]
 cmp eax,63*1024
 ja drawbitmap12
-mov drawbitmapbit,1
+mov cs:drawbitmapbit,1
 mov si,18
 mov ax,ds:[si]
-mov drawbitmapw,ax
+mov cs:drawbitmapw,ax
 cmp ax,2
 jz  drawbitmap10
 cmp ax,4
@@ -669,16 +669,16 @@ cmp ax,256
 jz  drawbitmap10
 jmp drawbitmap11:
 drawbitmap10:
-mov drawbitmapbit,0
+mov cs:drawbitmapbit,0
 drawbitmap11:
 mov si,22
 mov ax,ds:[si]
-mov drawbitmaph,ax
+mov cs:drawbitmaph,ax
 mov si,10
 mov ax,ds:[si]
-mov drawbitmapstart,ax
-mov ax,drawbitmapy
-mov bx,drawbitmaph
+mov cs:drawbitmapstart,ax
+mov ax,cs:drawbitmapy
+mov bx,cs:drawbitmaph
 clc
 add ax,bx
 xor dx,dx
@@ -686,25 +686,25 @@ xor cx,cx
 mov bx,320
 clc
 mul bx
-mov bx,drawbitmapx
+mov bx,cs:drawbitmapx
 clc
 add ax,bx
-mov drawbitmappoint,ax
+mov cs:drawbitmappoint,ax
 mov ax,320
-mov bx,drawbitmapw
+mov bx,cs:drawbitmapw
 clc
 add ax,bx 
-mov drawbitmapreturn,ax
+mov cs:drawbitmapreturn,ax
 
-mov si,drawbitmapstart
-mov di,drawbitmappoint
-mov bh,drawbitmapbit
-mov dx,drawbitmapreturn
+mov si,cs:drawbitmapstart
+mov di,cs:drawbitmappoint
+mov bh,cs:drawbitmapbit
+mov dx,cs:drawbitmapreturn
 
 
 drawbitmap91:
-mov ax,drawbitmapw
-mov drawbitmapxcopy,ax 
+mov ax,cs:drawbitmapw
+mov cs:drawbitmapxcopy,ax 
 drawbitmap90:
 mov al,ds:[si]
 inc si
@@ -721,8 +721,8 @@ or al,ah
 or al,bl
 mov es:[di],al
 inc di
-dec drawbitmapxcopy
-cmp drawbitmapxcopy,0
+dec cs:drawbitmapxcopy
+cmp cs:drawbitmapxcopy,0
 jnz drawbitmap90
 clc
 sub di,dx
@@ -730,8 +730,8 @@ cmp bh,0
 jz drawbitmap92
 inc si
 drawbitmap92:
-dec drawbitmaph
-cmp drawbitmaph,0
+dec cs:drawbitmaph
+cmp cs:drawbitmaph,0
 jnz drawbitmap91
 
 
