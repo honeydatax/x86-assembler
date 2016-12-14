@@ -97,6 +97,7 @@ call mem32
 mov cs:read32addrs2,eax
 mov eax,0
 mov cs:read32counter2,eax
+mov eax,0ffffh
 mov cs:read32size,eax
 mov eax,cs:read32counter3
 cmp eax,0
@@ -114,6 +115,7 @@ mov ds,ax
 mov ecx,cs:read32size
 mov esi,cs:read32addrs2
 mov edi,cs:read32addrs1
+mov edx,1
 call copymem32
 
 
@@ -139,9 +141,10 @@ mov ecx,cs:read32output
 call read16
 mov ax,cs:read32seg2
 mov ds,ax
-mov ecx,cs:read32output
+mov cx,cs:read32output
 mov esi,cs:read32addrs2
 mov edi,cs:read32addrs1
+mov edx,1
 call copymem32
 
 
@@ -188,7 +191,8 @@ write321:
 mov cs:write32addrs1,esi
 mov cs:write32counter1,ecx
 mov cs:write32f1,di
-mov cs:write32seg2,0
+mov ax,0
+mov cs:write32seg2,ax
 mov eax,ecx
 cmp eax,0
 jz write325
@@ -210,6 +214,7 @@ call mem32
 mov cs:write32addrs2,eax
 mov eax,0
 mov cs:write32counter2,eax
+mov eax,0ffffh
 mov cs:write32size,eax
 mov eax,cs:write32counter3
 cmp eax,0
@@ -221,6 +226,7 @@ mov ds,ax
 mov ecx,cs:write32size
 mov esi,cs:write32addrs1
 mov edi,cs:write32addrs2
+mov edx,1
 call copymem32
 mov ax,cs:write32seg1
 mov ds,ax
@@ -247,12 +253,13 @@ mov ds,ax
 mov ecx,cs:write32output
 mov esi,cs:write32addrs1
 mov edi,cs:write32addrs2
+mov edx,1
 call copymem32
 mov ax,cs:write32seg1
 mov ds,ax
 mov si,0
 mov di,cs:write32f1
-mov ecx,cs:write32output
+mov cx,cs:write32output
 call write16
 
 write324:
@@ -266,6 +273,7 @@ pop ecx
 pop ebx
 pop eax
 ret
+
 
 
 
