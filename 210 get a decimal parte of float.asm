@@ -46,9 +46,10 @@ clc
 div ebx
 mov cs:nn1,eax
 fld dword nf1
+fadd dword nf6
+fwait
 fisub dword nn1
 fwait
-fadd dword nf6
 fmul dword nf4
 fwait
 fist dword nn2
