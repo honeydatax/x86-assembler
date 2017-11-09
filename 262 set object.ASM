@@ -1397,7 +1397,7 @@ mov al,cs:color
 push ax
 mov eax,cs:[si]
 mov cs:x,eax
-mov al,cs:[esi+5]
+mov al,cs:[esi+4]
 mov cs:color,al
 call twindows
 pop ax

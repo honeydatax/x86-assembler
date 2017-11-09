@@ -9,7 +9,7 @@ mov si,offset endf
 mov eax,10100404h
 mov cs:endf,eax
 mov al,17h
-mov cs:[si+5],al
+mov cs:[si+4],al
 call otwindows
 
 
@@ -1385,7 +1385,7 @@ mov al,cs:color
 push ax
 mov eax,cs:[si]
 mov cs:x,eax
-mov al,cs:[esi+5]
+mov al,cs:[si+4]
 mov cs:color,al
 call twindows
 pop ax
@@ -1403,6 +1403,25 @@ pop ebx
 
 ret
 
+setx:
+mov cs:[si],al
+ret
+
+sety:
+mov cs:[si+1],al
+ret
+
+setw:
+mov cs:[si+2],al
+ret
+
+seth:
+mov cs:[si+3],al
+ret
+
+setcolor:
+mov cs:[si+4],al
+ret
 
 endf   db " "
 
