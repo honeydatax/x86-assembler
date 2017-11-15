@@ -10,14 +10,17 @@ call startmem
 
 call cls
 
-push ds
-mov ax,0
-mov ds,ax
+
 mov ecx,9
 call reserves
 
 mov edi,eax
 mov esi,eax
+
+push ds
+mov ax,0
+mov ds,ax
+
 mov al,1
 mov ds:[edi],al
 mov ds:[edi+1],al
@@ -29,6 +32,7 @@ mov ds:[edi+4],al
 xor eax,eax
 mov ds:[edi+5],eax
 
+mov edi,esi
 call twindows32
 
 
@@ -1303,7 +1307,7 @@ reservemem2 resd 1
 reserves2:
 xor ax,ax
 mov ds,ax
-mov ebx,120000h 
+mov ebx,130000h 
 mov eax,ds:[ebx]
 mov edx,eax
 clc
@@ -1516,17 +1520,17 @@ pop bx
 ret
 
 cls:
-push gs
+
 push ax
 push cx
 push bx
 mov ax,0b800h
-mov gs,ax
+mov ds,ax
 mov cx,80*25
 mov bx,0
 mov ax,07020h
 cls1:
-mov gs:[bx],ax
+mov ds:[bx],ax
 inc bx
 inc bx
 dec cx
@@ -1535,7 +1539,7 @@ jnz cls1
 pop bx
 pop cx
 pop ax
-pop gs
+
 ret
 
 print32w:
