@@ -17,7 +17,7 @@ call reserves
 mov edi,eax
 push eax
 
-push ds
+
 mov ax,0
 mov ds,ax
 
@@ -37,10 +37,9 @@ inc si
 mov ax,cs
 call mem32
 mov ebx,eax
-pop ds
+
 pop esi
 
-push ds
 mov ax,0
 mov ds,ax
 
@@ -53,7 +52,7 @@ call twprint32
 
 
 
-
+pop ds
 jmp exitdo
 
 exitdo:
