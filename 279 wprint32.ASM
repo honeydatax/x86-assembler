@@ -8,11 +8,16 @@ call startmem
 
 
 
+
 call cls
+
 
 
 mov ecx,9
 call reserves
+
+
+
 
 mov edi,eax
 push eax
@@ -52,7 +57,7 @@ call twprint32
 
 
 
-pop ds
+
 jmp exitdo
 
 exitdo:
@@ -97,9 +102,9 @@ sstring dd 0
 
 
 exit:
-int 20h
 xor ah,ah
 int 21h
+int 20h
 ret
 
 
@@ -670,19 +675,35 @@ pop eax
 ret
 
 stack:
+mov ax,sp
+mov bx,500
+clc
+sub ax,bx
+mov di,ax
 mov ax,cs
 mov bx,1000h
 clc 
 add ax,bx
+mov ds,ax
+mov si,0ffffh
+stack64:
+mov al,cs:[si]
+mov ds:[si],al
+dec si
+cmp si,di
+jnz stack64
+mov ax,ds
 mov ss,ax
 mov bx,offset endf
-mov variantetable,bx
-mov varianteblock,0
-mov cx,variantetablesize
+mov cs:variantetable,bx
+mov cs:varianteblock,0
+mov cx,cs:variantetablesize
 clc
 add bx,cx
 inc bx
-mov varianteptrpos,bx
+mov cs:varianteptrpos,bx
+mov ax,cs
+mov ds,ax
 jmp main
 ret
 
@@ -1322,7 +1343,7 @@ reservemem2 resd 1
 reserves2:
 xor ax,ax
 mov ds,ax
-mov ebx,130000h 
+mov ebx,120000h 
 mov eax,ds:[ebx]
 mov edx,eax
 clc
@@ -1332,6 +1353,8 @@ mov ds:[ebx],edx
 mov ebx,eax
 mov ds:[ebx],ecx
 add eax,4
+mov ax,cs
+mov ds,ax
 pop es
 pop ds
 pop ebp
@@ -1539,6 +1562,7 @@ cls:
 push ax
 push cx
 push bx
+push ds
 mov ax,0b800h
 mov ds,ax
 mov cx,80*25
@@ -1551,6 +1575,7 @@ inc bx
 dec cx
 cmp cx,0
 jnz cls1
+pop ds
 pop bx
 pop cx
 pop ax
