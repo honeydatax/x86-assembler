@@ -1353,8 +1353,6 @@ mov ds:[ebx],edx
 mov ebx,eax
 mov ds:[ebx],ecx
 add eax,4
-mov bx,cs
-mov ds,bx
 pop es
 pop ds
 pop ebp
@@ -1365,6 +1363,8 @@ pop ecx
 pop ebx
 
 ret
+
+
 
 twindows:
 push ebx
@@ -1475,7 +1475,7 @@ mov al,cs:color
 push ax
 mov eax,cs:[si]
 mov cs:x,eax
-mov al,cs:[esi+4]
+mov al,cs:[si+4]
 mov cs:color,al
 call twindows
 pop ax
