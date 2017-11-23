@@ -68,7 +68,8 @@ h     db 0
 color db 07h
 sstring dd 0
 
-
+rand dw 0
+randomize db  " "
 
 str32:
 push ax
@@ -1690,6 +1691,38 @@ pop ax
 mov cs:y,al
 pop ax
 mov cs:x,al
+pop es
+pop ds
+pop ebp
+pop esi
+pop edi
+pop edx
+pop ecx
+pop ebx
+ret
+
+rnd:
+push ebx
+push ecx
+push edx
+push edi
+push esi
+push ebp
+push ds
+push es
+mov ax,cs:rand
+cmp ax,0
+jnz rnd1
+mov ax,offset randomize
+mov cs:rand,ax
+rnd1:
+mov bx,cs:rand
+mov eax,cs:[bx]
+inc bx
+inc bx
+inc bx
+inc bx
+mov cs:rand,bx
 pop es
 pop ds
 pop ebp
