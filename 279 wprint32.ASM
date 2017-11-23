@@ -1353,8 +1353,8 @@ mov ds:[ebx],edx
 mov ebx,eax
 mov ds:[ebx],ecx
 add eax,4
-mov ax,cs
-mov ds,ax
+mov bx,cs
+mov ds,bx
 pop es
 pop ds
 pop ebp
