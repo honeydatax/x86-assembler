@@ -10,28 +10,16 @@ inc si
 mov ax,cs
 call mem32
 mov cs:ssstring,eax
-mov cs:ssstring2,eax
-mov cs:ssstring3,eax
-mov cs:ssstring4,eax
 
 call cls
+mov si,offset mytype
+
+call otwindows
 
 mov si,offset mytype
-call otwindows
+
 call twprint
 
-
-mov si,offset mytype2
-call otwindows
-call twprint
-
-mov si,offset mytype3
-call otwindows
-call twprint
-
-mov si,offset mytype4
-call otwindows
-call twprint
 
 
 
@@ -68,8 +56,7 @@ h     db 0
 color db 07h
 sstring dd 0
 
-rand dw 0
-randomize db  " "
+
 
 str32:
 push ax
@@ -1701,50 +1688,9 @@ pop ecx
 pop ebx
 ret
 
-rnd:
-push ebx
-push ecx
-push edx
-push edi
-push esi
-push ebp
-push ds
-push es
-mov ax,cs:rand
-cmp ax,0
-jnz rnd1
-mov ax,offset randomize
-mov cs:rand,ax
-rnd1:
-mov bx,cs:rand
-mov eax,cs:[bx]
-inc bx
-inc bx
-inc bx
-inc bx
-mov cs:rand,bx
-pop es
-pop ds
-pop ebp
-pop esi
-pop edi
-pop edx
-pop ecx
-pop ebx
-ret
-
 
 mytype db  1,1,3,3,17h
 ssstring dd 0
-mytype2 db 10,3,8,8,34h
-ssstring2 dd 0
-mytype3 db 30,3,8,3,43h
-ssstring3 dd 0
-
-mytype4 db 32,10,8,3,61h
-ssstring4 dd 0
-
-
 endf   db " "
 
 
