@@ -63,7 +63,7 @@ mov ds:[esi],al
 mov ax,bp
 mov ds:[esi+1],al
 
-mov al,17
+mov al,18
 mov ds:[esi+2],al
 
 mov al,5
@@ -1450,12 +1450,13 @@ clc
 add eax,ebx
 clc
 add eax,ebx
-mov ebx,0b8001h
+mov ebx,0b8000h
 clc
 add eax,ebx
 mov ebx,eax
-mov al,cs:color
-mov ds:[ebx],al
+mov al,32
+mov ah,cs:color
+mov ds:[ebx],ax
 mov ecx,cs:ttwindowsw
 dec ecx
 mov cs:ttwindowsw,ecx
