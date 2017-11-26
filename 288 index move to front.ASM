@@ -1460,12 +1460,13 @@ clc
 add eax,ebx
 clc
 add eax,ebx
-mov ebx,0b8001h
+mov ebx,0b8000h
 clc
 add eax,ebx
 mov ebx,eax
-mov al,cs:color
-mov ds:[ebx],al
+mov al,32
+mov ah,cs:color
+mov ds:[ebx],ax
 mov ecx,cs:ttwindowsw
 dec ecx
 mov cs:ttwindowsw,ecx
