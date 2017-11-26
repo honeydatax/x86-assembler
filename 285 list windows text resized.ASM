@@ -79,7 +79,7 @@ clc
 add al,7
 mov ds:[esi+4],al
 inc bp
-cmp bp,15
+cmp bp,16
 jnz for1
 ; -------
 
