@@ -2255,6 +2255,7 @@ dec esi
 mov ax,0
 mov ds,ax
 mov cl,ds:[esi]
+dec cl
 inc esi
 pop ax
 push ax
