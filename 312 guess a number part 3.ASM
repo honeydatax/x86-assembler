@@ -382,7 +382,7 @@ mov edi,ebp
 mov esi,ebp
 
 
-pop dx
+pop edx
 inc dh
 cmp dh,19
 jnz loop1
