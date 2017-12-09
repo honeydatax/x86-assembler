@@ -258,6 +258,7 @@ numberg:
 mov ebx,cs:address6
 mov al,'+'
 mov ds:[ebx],al
+jmp numberee
 numbere:
 mov ebx,cs:address6
 mov al,'='
