@@ -9,6 +9,7 @@ address6 resd 1
 address7 resd 1
 address8 resd 1
 address9 resd 1
+address10 resd 1
 number0 resd 1
 number1 resd 1
 number2 resd 1
@@ -281,6 +282,8 @@ mov esi,cs:address2
 mov cl,dh
 call getstringindex
 
+
+mov edi,cs:address1
 clc
 add edi,8
 push edx
