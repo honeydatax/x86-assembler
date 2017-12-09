@@ -223,10 +223,13 @@ mov ds:[esi],al
 mov cs:address5,esi
 
 
+
 mov esi,cs:address2
 mov cl,dh
 call getstringindex
 
+
+mov edi,cs:address1
 clc
 add edi,8
 push edx
