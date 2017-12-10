@@ -426,6 +426,13 @@ inc dh
 cmp dh,19
 jnz loop1
 
+mov esi,cs:address12
+mov cl,21
+mov edi,cs:address2
+call setlabel
+
+
+
 
 jmp exitdo
 
@@ -433,10 +440,6 @@ exitdo:
 
 
 
-mov esi,cs:address12
-mov cl,21
-mov edi,cs:address2
-call setlabel
 
 
 
