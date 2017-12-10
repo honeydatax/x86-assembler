@@ -339,7 +339,7 @@ mov al,'='
 mov ds:[ebx],al
 mov esi,cs:address9
 mov cl,21
-mov edi,ebp
+mov edi,cs:address2
 call setlabel
 jmp exitdo
 numberee:
@@ -382,7 +382,7 @@ mov edi,ebp
 mov esi,ebp
 
 
-pop edx
+pop dx
 inc dh
 cmp dh,19
 jnz loop1
