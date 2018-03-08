@@ -32,14 +32,14 @@ getstr:
           getstr1:                
                     call getchar
                     cmp al,8                
-          JNZ GETSTR2
+                    JNZ GETSTR2
           inc cx                
           cmp cx,dx
-JB GETSTR2
+          JB GETSTR2
 mov cx,dx
 getstr2:                
           cmp al,13
-JZ GETSTR3
+          JZ GETSTR3
 mov [bx],al
 call printf
 inc bx                
