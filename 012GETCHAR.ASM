@@ -36,22 +36,22 @@ getstr:
           inc cx                
           cmp cx,dx
           JB GETSTR2
-mov cx,dx
-getstr2:                
-          cmp al,13
-          JZ GETSTR3
-mov [bx],al
-call printf
-inc bx                
-dec cx                
-cmp cx,0                
-JA GETSTR1 
-getstr3:                
-          pop dx                
-          pop cx                
-          pop bx                
-          pop ax                
-          RET                
+          mov cx,dx
+          getstr2:                
+                    cmp al,13
+                    JZ GETSTR3
+          mov [bx],al
+          call printf
+          inc bx                
+          dec cx                
+          cmp cx,0                
+          JA GETSTR1 
+          getstr3:                
+                    pop dx                
+                    pop cx                
+                    pop bx                
+                    pop ax                
+                    RET                
                 
                 
                 
