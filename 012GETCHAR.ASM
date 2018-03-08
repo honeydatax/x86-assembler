@@ -1,11 +1,11 @@
 call getstr
 call printf
                 
-exit:                
+EXIT:                
           int 20h                
           RET                
                 
-printf:                
+PRINTF:                
           push ax                
           push bx                
           xor bh,bh
@@ -17,19 +17,19 @@ printf:
           RET                
                 
                 
-getchar:                
+GETCHAR:                
           xor ax,ax
           int 16h                
           RET                
                 
                 
-getstr:                
+GETSTR:                
           push ax                
           push bx                
           push cx                
           push dx                
           mov dx,cx
-          getstr1:                
+          GETSTR1:                
                     call getchar
                     cmp al,8                
                     JNZ GETSTR2
@@ -37,21 +37,21 @@ getstr:
           cmp cx,dx
           JB GETSTR2
           mov cx,dx
-          getstr2:                
+          GETSTR2:                
                     cmp al,13
                     JZ GETSTR3
-          mov [bx],al
-          call printf
-          inc bx                
-          dec cx                
-          cmp cx,0                
-          JA GETSTR1 
-          getstr3:                
-                    pop dx                
-                    pop cx                
-                    pop bx                
-                    pop ax                
-                    RET                
+                    mov [bx],al
+                    call printf
+                    inc bx                
+                    dec cx                
+                    cmp cx,0                
+                    JA GETSTR1 
+                    GETSTR3:                
+                              pop dx                
+                              pop cx                
+                              pop bx                
+                              pop ax                
+                              RET                
                 
                 
                 
