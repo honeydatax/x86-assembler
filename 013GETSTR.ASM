@@ -45,20 +45,20 @@ GETSTR:
                     inc bx                
                     mov cx,dx
                     GETSTR2:                
-                              cmp al,13
-                              JZ GETSTR3
-                              mov [bx],al
-                              call printf
-                              inc bx                
-                              dec cx                
-                              cmp cx,0                
-                              JA GETSTR1 
-                              GETSTR3:                
-                                        pop dx                
-                                        pop cx                
-                                        pop bx                
-                                        pop ax                
-                                        RET                
+                    cmp al,13
+                    JZ GETSTR3
+                    mov [bx],al
+                    call printf
+                    inc bx                
+                    dec cx                
+                    cmp cx,0                
+                    JA GETSTR1 
+          GETSTR3:                
+          pop dx                
+          pop cx                
+          pop bx                
+          pop ax                
+          RET                
                 
                 
                 
@@ -75,11 +75,11 @@ CPRINT:
                     dec cx                
                     cmp cx,0                
                     JNZ CPRINT1
-                    pop dx                
-                    pop cx                
-                    pop bx                
-                    pop ax                
-                    RET                
+          pop dx                
+          pop cx                
+          pop bx                
+          pop ax                
+          RET                
                 
                 
 str2 db 13,10,">"
