@@ -74,28 +74,28 @@ GETSTR:
           GETSTR1:                
                     call getchar
                     cmp al,7                
-                    jnz getstr2
+                    JNZ GETSTR2
                     inc cx                
                     dec bx                
                     cmp cx,dx
-                    jb getstr2
+                    JB GETSTR2
                     inc bx                
                     mov cx,dx
                     GETSTR2:                
-                              cmp al,13
-                              jz getstr3
-                              mov [bx],al
-                              call printf
-                              inc bx                
-                              dec cx                
-                              cmp cx,0                
-                              ja getstr1 
-                              GETSTR3:                
-                                        pop dx                
-                                        pop cx                
-                                        pop bx                
-                                        pop ax                
-                                        RET                
+                    cmp al,13
+                    JZ GETSTR3
+                    mov [bx],al
+                    call printf
+                    inc bx                
+                    dec cx                
+                    cmp cx,0                
+                    JA GETSTR1 
+          GETSTR3:                
+          pop dx                
+          pop cx                
+          pop bx                
+          pop ax                
+          RET                
                 
                 
                 
@@ -111,12 +111,12 @@ CPRINT:
                     inc bx                
                     dec cx                
                     cmp cx,0                
-                    jnz cprint1
-                    pop dx                
-                    pop cx                
-                    pop bx                
-                    pop ax                
-                    RET                
+                    JNZ CPRINT1
+          pop dx                
+          pop cx                
+          pop bx                
+          pop ax                
+          RET                
                 
                 
                 
@@ -164,10 +164,10 @@ ENTERLINE:
                 
                 
 SSTR1 DB 13,10,"NAME:"
-          SSTR2 DB 13,10,"LAST NAME:"
-                    SSTR3 DB 13,10,"ADDRESS:"
-                              SSTR4 DB 13,10,"PHONE:"
-                                        str1 db "          .",13,10
-                                        str2 db "          .",13,10
-                                        str3 db "          .",13,10
-                                        str4 db "          .",13,10
+SSTR2 DB 13,10,"LAST NAME:"
+SSTR3 DB 13,10,"ADDRESS:"
+SSTR4 DB 13,10,"PHONE:"
+str1 db "          .",13,10
+str2 db "          .",13,10
+str3 db "          .",13,10
+str4 db "          .",13,10
