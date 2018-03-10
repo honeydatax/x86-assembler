@@ -96,31 +96,31 @@ CPRINT:
                 
                 
 GETSTRINGS:
-          push ax                
-          push bx                
-          push cx                
-          push dx                
-          push cx                
-          push bx                
-          push dx                
-          push ax                
-          mov bx,offset cf
-          mov cx,2                
-          call cprint
-          pop cx                
-          pop bx                
-          call cprint
-          pop bx                
-          pop cx                
-          call getstr
-          mov bx,offset cf
-          mov cx,2                
-          call cprint
-          pop dx                
-          pop cx                
-          pop bx                
-          pop ax                
-          RET                
+push ax                
+push bx                
+push cx                
+push dx                
+push cx                
+push bx                
+push dx                
+push ax                
+mov bx,offset cf
+mov cx,2                
+call cprint
+pop cx                
+pop bx                
+call cprint
+pop bx                
+pop cx                
+call getstr
+mov bx,offset cf
+mov cx,2                
+call cprint
+pop dx                
+pop cx                
+pop bx                
+pop ax                
+RET                
 cf db 13,10,32,"."
                 
 ENTERLINE:
@@ -712,23 +712,23 @@ HEX:
           clc                
           add si,ax 
           MOV AL,CS:[SI]
-                    mov [bx],al
-                    dec bx                
-                    mov ax,dx
-                    and ax,0f0h
-                    shr ax,4                
-                    mov si,offset hhex
-                    clc                
-                    add si,ax 
-                    MOV AL,CS:[SI]
-                              mov [bx],al
-                                              
-                              pop di                
-                              pop si                
-                              pop dx                
-                              pop bx                
-                              pop ax                
-                              RET                
+          mov [bx],al
+          dec bx                
+          mov ax,dx
+          and ax,0f0h
+          shr ax,4                
+          mov si,offset hhex
+          clc                
+          add si,ax 
+          MOV AL,CS:[SI]
+          mov [bx],al
+                          
+          pop di                
+          pop si                
+          pop dx                
+          pop bx                
+          pop ax                
+          RET                
                 
                 
                 
