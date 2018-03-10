@@ -39,28 +39,28 @@ GETSTR:
           GETSTR1:                
                     call getchar
                     cmp al,7                
-                    jnz getstr2
+                    JNZ GETSTR2
                     inc cx                
                     dec bx                
                     cmp cx,dx
-                    jb getstr2
+                    JB GETSTR2
                     inc bx                
                     mov cx,dx
                     GETSTR2:                
-                              cmp al,13
-                              jz getstr3
-                              mov [bx],al
-                              call printf
-                              inc bx                
-                              dec cx                
-                              cmp cx,0                
-                              ja getstr1 
-                              GETSTR3:                
-                                        pop dx                
-                                        pop cx                
-                                        pop bx                
-                                        pop ax                
-                                        RET                
+                    cmp al,13
+                    JZ GETSTR3
+                    mov [bx],al
+                    call printf
+                    inc bx                
+                    dec cx                
+                    cmp cx,0                
+                    JA GETSTR1 
+          GETSTR3:                
+          pop dx                
+          pop cx                
+          pop bx                
+          pop ax                
+          RET                
                 
                 
                 
@@ -76,12 +76,12 @@ CPRINT:
                     inc bx                
                     dec cx                
                     cmp cx,0                
-                    jnz cprint1
-                    pop dx                
-                    pop cx                
-                    pop bx                
-                    pop ax                
-                    RET                
+                    JNZ CPRINT1
+          pop dx                
+          pop cx                
+          pop bx                
+          pop ax                
+          RET                
                 
                 
                 
@@ -131,11 +131,11 @@ FILLCHAR:
                     mov [bx],al
                     inc bx                
                     dec cx                
-                    jnz fillchar1
-                    pop cx                
-                    pop bx                
-                    pop ax                
-                    RET                
+                    JNZ FILLCHAR1
+          pop cx                
+          pop bx                
+          pop ax                
+          RET                
                 
 COPYSTR:                
           push ax                
@@ -150,20 +150,20 @@ COPYSTR:
           COPYSTR1:
                     mov al,[si]
                     cmp al,0                
-                    jz copyStr2
+                    JZ COPYSTR2
                     mov [di],al
                     inc di                
                     inc si                
                     dec cx                
-                    jnz copyStr1
-                    COPYSTR2:
-                              pop si                
-                              pop di                
-                              pop dx                
-                              pop cx                
-                              pop bx                
-                              pop ax                
-                              RET                
+                    JNZ COPYSTR1
+          COPYSTR2:
+          pop si                
+          pop di                
+          pop dx                
+          pop cx                
+          pop bx                
+          pop ax                
+          RET                
                 
 COPYMEM:                
           push ax                
@@ -180,15 +180,15 @@ COPYMEM:
                     inc di                
                     inc si                
                     dec cx                
-                    jnz copymem1
-                    COPYMEM2:
-                              pop si                
-                              pop di                
-                              pop dx                
-                              pop cx                
-                              pop bx                
-                              pop ax                
-                              RET                
+                    JNZ COPYMEM1
+          COPYMEM2:
+                    pop si                
+                    pop di                
+                    pop dx                
+                    pop cx                
+                    pop bx                
+                    pop ax                
+                    RET                
                 
                 
                 
