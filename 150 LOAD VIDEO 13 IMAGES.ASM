@@ -73,7 +73,7 @@ MAIN:
                               RET                
                 
                 
-file1 db   "128.v13",0
+file1 db   "161.v13",0
 text1    db  18,"error open a files.",0
                 
                 
