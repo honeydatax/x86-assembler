@@ -50,15 +50,15 @@ MAIN:
           mov dx,offset text1
           call print 
           ESCERROR:
+                          
+          EXITDO:                
                                     
-                    EXITDO:                
-                                              
-                                              
-                              EXIT:                
-                                        int 20h                
-                                        xor ah,ah
-                                        int 21h                
-                                        RET                
+                                    
+                    EXIT:                
+                              int 20h                
+                              xor ah,ah
+                              int 21h                
+                              RET                
                 
                 
 file1    db   "128.bmp",0
@@ -121,21 +121,21 @@ FILL32:
           JNZ FILL3211
           inc edx                
           FILL3211:
-                    FILL321:                
-                              mov ds:[edi],al
-                              clc                
-                              add edi,edx
-                              dec ecx                
-                              JNZ FILL321:
-                    pop ds                
-                    pop ebp                
-                    pop edi                
-                    pop esi                
-                    pop edx                
-                    pop ecx                 
-                    pop ebx                
-                    pop eax                
-                    RET                
+          FILL321:                
+                    mov ds:[edi],al
+                    clc                
+                    add edi,edx
+                    dec ecx                
+                    JNZ FILL321:
+          pop ds                
+          pop ebp                
+          pop edi                
+          pop esi                
+          pop edx                
+          pop ecx                 
+          pop ebx                
+          pop eax                
+          RET                
                 
                 
                 
@@ -155,26 +155,26 @@ COPYMEM32:
           JNZ COPYMEM3211
           inc edx                
           COPYMEM3211:
-                    cmp ecx,0
-                    JZ COPYMEM326
-                    COPYMEM321:
-                              mov al,ds:[esi]
-                              mov ds:[edi],al
-                              clc                
-                              add edi,edx
-                              inc esi                
-                              dec ecx                
-                              JNZ COPYMEM321:
-                    COPYMEM326:
-                              pop ds                
-                              pop ebp                
-                              pop edi                
-                              pop esi                
-                              pop edx                
-                              pop ecx                 
-                              pop ebx                
-                              pop eax                
-                              RET                
+          cmp ecx,0
+          JZ COPYMEM326
+          COPYMEM321:
+                    mov al,ds:[esi]
+                    mov ds:[edi],al
+                    clc                
+                    add edi,edx
+                    inc esi                
+                    dec ecx                
+                    JNZ COPYMEM321:
+          COPYMEM326:
+          pop ds                
+          pop ebp                
+          pop edi                
+          pop esi                
+          pop edx                
+          pop ecx                 
+          pop ebx                
+          pop eax                
+          RET                
                 
                 
                 
@@ -251,41 +251,41 @@ PRINT32:
           JB PRINT3212
           mov ebx,255
           PRINT3212:
-                    mov edx,2
-                    call copymem32 
-                    mov al,x                
-                    mov bl,y                
-                    and ax,0ffh
-                    and bx,0ffh
-                    mov si,bx
-                    clc                
-                    add ax,cx
-                    cmp ax,80
-                    JB PRINT328
-                    mov bx,80
-                    sub ax,bx
-                    xor dx,dx
-                    xor cx,cx
-                    mov bx,80
-                    clc                
-                    div bx                
-                    clc                
-                    add ax,si
-                    cmp ax,24
-                    JB PRINT328
-                    mov ax,24
-                    PRINT328:
-                              mov y,ax                
-                              mov x,dx 
-                              PRINT3213:
-                                        pop ebp                
-                                        pop edi                
-                                        pop esi                
-                                        pop edx                
-                                        pop ecx                 
-                                        pop ebx                
-                                        pop eax                
-                                        RET                
+          mov edx,2
+          call copymem32 
+          mov al,x                
+          mov bl,y                
+          and ax,0ffh
+          and bx,0ffh
+          mov si,bx
+          clc                
+          add ax,cx
+          cmp ax,80
+          JB PRINT328
+          mov bx,80
+          sub ax,bx
+          xor dx,dx
+          xor cx,cx
+          mov bx,80
+          clc                
+          div bx                
+          clc                
+          add ax,si
+          cmp ax,24
+          JB PRINT328
+          mov ax,24
+          PRINT328:
+          mov y,ax                
+          mov x,dx 
+          PRINT3213:
+          pop ebp                
+          pop edi                
+          pop esi                
+          pop edx                
+          pop ecx                 
+          pop ebx                
+          pop eax                
+          RET                
                 
 SCROLLUP:
           push eax                
@@ -381,9 +381,9 @@ OPEN16:
           JNC OPEN163
           mov ax,0ffffh
           OPEN163:                
-                    pop dx                 
-                    pop cx                
-                    RET                
+          pop dx                 
+          pop cx                
+          RET                
                 
                 
 GRAPHICS:
@@ -429,13 +429,13 @@ SETPALETE:
                     inc esi                
                     cmp esi,edi
                     JB SETPALETE2
-                    pop esi                 
-                    pop edi                
-                    pop edx                
-                    pop ecx                
-                    pop ebx                
-                    pop eax                
-                    RET                
+          pop esi                 
+          pop edi                
+          pop edx                
+          pop ecx                
+          pop ebx                
+          pop eax                
+          RET                
                 
                 
                 
@@ -475,13 +475,13 @@ CREATPALLET:
                     inc cx                
                     cmp cx,256
                     JB CREATPALLET1
-                    call setpalete
-                    mov edi,esi
-                    pop dx                
-                    pop cx                
-                    pop bx                
-                    pop ax                
-                    RET                
+          call setpalete
+          mov edi,esi
+          pop dx                
+          pop cx                
+          pop bx                
+          pop ax                
+          RET                
                 
                 
 LOADBITMAP:
@@ -554,17 +554,17 @@ LOADBITMAP:
           JA LOADBITMAP2
           JMP LOADBITMAP1
           LOADBITMAP2:
-                    mov ax,0ffffh
-                    LOADBITMAP1:
-                                              
-                                              
-                              pop bp                
-                              pop si                
-                              pop di                
-                              pop dx                
-                              pop cx                
-                              pop bx                
-                              RET                
+          mov ax,0ffffh
+          LOADBITMAP1:
+                          
+                          
+          pop bp                
+          pop si                
+          pop di                
+          pop dx                
+          pop cx                
+          pop bx                
+          RET                
                 
                 
 DRAWBITMAP:
@@ -586,156 +586,156 @@ DRAWBITMAP:
           drawbitmappoint resw 1
           drawbitmapreturn resw 1
           DRAWBITMAP9:
-                    mov cs:drawbitmapx,ax
-                    mov cs:drawbitmapy,bx
-                    mov si,0                
-                    mov al,ds:[si]
-                    cmp al,'B'
-                    JNZ DRAWBITMAP12
-                    inc si                
-                    mov al,ds:[si]
-                    cmp al,'M'
-                    JNZ DRAWBITMAP12
-                    inc si                
-                    mov eax,ds:[si]
-                    cmp eax,63*1024
-                    JA DRAWBITMAP12
-                    mov bx,16
+          mov cs:drawbitmapx,ax
+          mov cs:drawbitmapy,bx
+          mov si,0                
+          mov al,ds:[si]
+          cmp al,'B'
+          JNZ DRAWBITMAP12
+          inc si                
+          mov al,ds:[si]
+          cmp al,'M'
+          JNZ DRAWBITMAP12
+          inc si                
+          mov eax,ds:[si]
+          cmp eax,63*1024
+          JA DRAWBITMAP12
+          mov bx,16
+          clc                
+          add si,bx
+          mov eax,ds:[si]
+          cmp eax,319
+          JA DRAWBITMAP12
+          inc si                
+          inc si                
+          inc si                
+          inc si                
+          mov eax,ds:[si]
+          cmp eax,199
+          JA DRAWBITMAP12
+          inc si                
+          inc si                
+          inc si                
+          inc si                
+          mov ax,ds:[si]
+          cmp ax,1                
+          JNZ DRAWBITMAP12
+          inc si                
+          inc si                
+          mov ax,ds:[si]
+          cmp ax,24
+          JNZ DRAWBITMAP12
+          inc si                
+          inc si                
+          mov eax,ds:[si]
+          cmp eax,0
+          JNZ DRAWBITMAP12
+          inc si                
+          inc si                
+          inc si                
+          inc si                
+          mov eax,ds:[si]
+          cmp eax,63*1024
+          JA DRAWBITMAP12
+          mov cs:drawbitmapbit,1
+          mov si,18
+          mov ax,ds:[si]
+          mov cs:drawbitmapw,ax
+          cmp ax,2                
+          JZ  DRAWBITMAP10
+          cmp ax,4                
+          JZ  DRAWBITMAP10
+          cmp ax,8                
+          JZ  DRAWBITMAP10
+          cmp ax,16
+          JZ  DRAWBITMAP10
+          cmp ax,32
+          JZ  DRAWBITMAP10
+          cmp ax,64
+          JZ  DRAWBITMAP10
+          cmp ax,128
+          JZ  DRAWBITMAP10
+          cmp ax,256
+          JZ  DRAWBITMAP10
+          JMP DRAWBITMAP11:
+          DRAWBITMAP10:
+          mov cs:drawbitmapbit,0
+          DRAWBITMAP11:
+          mov si,22
+          mov ax,ds:[si]
+          mov drawbitmaph,ax
+          mov si,10
+          mov ax,ds:[si]
+          mov cs:drawbitmapstart,ax
+          mov ax,cs:drawbitmapy
+          mov bx,cs:drawbitmaph
+          clc                
+          add ax,bx
+          xor dx,dx
+          xor cx,cx
+          mov bx,320
+          clc                
+          mul bx                
+          mov bx,cs:drawbitmapx
+          clc                
+          add ax,bx
+          mov cs:drawbitmappoint,ax
+          mov ax,320
+          mov bx,cs:drawbitmapw
+          clc                
+          add ax,bx 
+          mov cs:drawbitmapreturn,ax
+                          
+          mov si,cs:drawbitmapstart
+          mov di,cs:drawbitmappoint
+          mov bh,cs:drawbitmapbit
+          mov dx,cs:drawbitmapreturn
+                          
+                          
+          DRAWBITMAP91:
+                    mov ax,cs:drawbitmapw
+                    mov cs:drawbitmapxcopy,ax 
+                    DRAWBITMAP90:
+                              mov al,ds:[si]
+                              inc si                
+                              mov ah,ds:[si]
+                              inc si                
+                              mov bl,ds:[si]
+                              inc si                
+                              and al,11000000b
+                              and ah,11100000b
+                              and bl,11100000b
+                              shr ah,2                
+                              shr bl,5                
+                              or al,ah                
+                              or al,bl                
+                              mov es:[di],al
+                              inc di                
+                              DEC CS:DRAWBITMAPXCOPY
+                              CMP CS:DRAWBITMAPXCOPY,0
+                              JNZ DRAWBITMAP90
                     clc                
-                    add si,bx
-                    mov eax,ds:[si]
-                    cmp eax,319
-                    JA DRAWBITMAP12
+                    sub di,dx
+                    cmp bh,0                
+                    JZ DRAWBITMAP92
                     inc si                
-                    inc si                
-                    inc si                
-                    inc si                
-                    mov eax,ds:[si]
-                    cmp eax,199
-                    JA DRAWBITMAP12
-                    inc si                
-                    inc si                
-                    inc si                
-                    inc si                
-                    mov ax,ds:[si]
-                    cmp ax,1                
-                    JNZ DRAWBITMAP12
-                    inc si                
-                    inc si                
-                    mov ax,ds:[si]
-                    cmp ax,24
-                    JNZ DRAWBITMAP12
-                    inc si                
-                    inc si                
-                    mov eax,ds:[si]
-                    cmp eax,0
-                    JNZ DRAWBITMAP12
-                    inc si                
-                    inc si                
-                    inc si                
-                    inc si                
-                    mov eax,ds:[si]
-                    cmp eax,63*1024
-                    JA DRAWBITMAP12
-                    mov cs:drawbitmapbit,1
-                    mov si,18
-                    mov ax,ds:[si]
-                    mov cs:drawbitmapw,ax
-                    cmp ax,2                
-                    JZ  DRAWBITMAP10
-                    cmp ax,4                
-                    JZ  DRAWBITMAP10
-                    cmp ax,8                
-                    JZ  DRAWBITMAP10
-                    cmp ax,16
-                    JZ  DRAWBITMAP10
-                    cmp ax,32
-                    JZ  DRAWBITMAP10
-                    cmp ax,64
-                    JZ  DRAWBITMAP10
-                    cmp ax,128
-                    JZ  DRAWBITMAP10
-                    cmp ax,256
-                    JZ  DRAWBITMAP10
-                    JMP DRAWBITMAP11:
-                    DRAWBITMAP10:
-                              mov cs:drawbitmapbit,0
-                              DRAWBITMAP11:
-                              mov si,22
-                              mov ax,ds:[si]
-                              mov drawbitmaph,ax
-                              mov si,10
-                              mov ax,ds:[si]
-                              mov cs:drawbitmapstart,ax
-                              mov ax,cs:drawbitmapy
-                              mov bx,cs:drawbitmaph
-                              clc                
-                              add ax,bx
-                              xor dx,dx
-                              xor cx,cx
-                              mov bx,320
-                              clc                
-                              mul bx                
-                              mov bx,cs:drawbitmapx
-                              clc                
-                              add ax,bx
-                              mov cs:drawbitmappoint,ax
-                              mov ax,320
-                              mov bx,cs:drawbitmapw
-                              clc                
-                              add ax,bx 
-                              mov cs:drawbitmapreturn,ax
-                                              
-                              mov si,cs:drawbitmapstart
-                              mov di,cs:drawbitmappoint
-                              mov bh,cs:drawbitmapbit
-                              mov dx,cs:drawbitmapreturn
-                                              
-                                              
-                              DRAWBITMAP91:
-                                        mov ax,cs:drawbitmapw
-                                        mov cs:drawbitmapxcopy,ax 
-                                        DRAWBITMAP90:
-                                                  mov al,ds:[si]
-                                                  inc si                
-                                                  mov ah,ds:[si]
-                                                  inc si                
-                                                  mov bl,ds:[si]
-                                                  inc si                
-                                                  and al,11000000b
-                                                  and ah,11100000b
-                                                  and bl,11100000b
-                                                  shr ah,2                
-                                                  shr bl,5                
-                                                  or al,ah                
-                                                  or al,bl                
-                                                  mov es:[di],al
-                                                  inc di                
-                                                  DEC CS:DRAWBITMAPXCOPY
-                                                            CMP CS:DRAWBITMAPXCOPY,0
-                                                                      JNZ DRAWBITMAP90
-                                                            clc                
-                                                            sub di,dx
-                                                            cmp bh,0                
-                                                            JZ DRAWBITMAP92
-                                                  inc si                
-                                                  DRAWBITMAP92:
-                                                            DEC CS:DRAWBITMAPH
-                                                                      CMP CS:DRAWBITMAPH,0
-                                                                                JNZ DRAWBITMAP91
-                                                                                      
-                                                                                      
-                                                                      JMP DRAWBITMAP13
-                                                            DRAWBITMAP12:
-                                                                      mov ax,0ffffh
-                                                                      DRAWBITMAP13:
-                                                                                pop bp                
-                                                                                pop si                
-                                                                                pop di                
-                                                                                pop dx                
-                                                                                pop cx                
-                                                                                pop bx                
-                                                                                RET                
+                    DRAWBITMAP92:
+                    DEC CS:DRAWBITMAPH
+                    CMP CS:DRAWBITMAPH,0
+                    JNZ DRAWBITMAP91
+                          
+                          
+          JMP DRAWBITMAP13
+          DRAWBITMAP12:
+          mov ax,0ffffh
+          DRAWBITMAP13:
+          pop bp                
+          pop si                
+          pop di                
+          pop dx                
+          pop cx                
+          pop bx                
+          RET                
                 
                 
 SAVE13:                
@@ -761,177 +761,177 @@ SAVE13:
           save13si resw 1
           save1313size resw 1
           SAVE139:                
-                    mov cs:save13si,si
-                    mov cs:save13x,ax
-                    mov si,0                
-                    mov al,ds:[si]
-                    cmp al,'B'
-                    JNZ SAVE1312
-                    inc si                
-                    mov al,ds:[si]
-                    cmp al,'M'
-                    JNZ SAVE1312
-                    inc si                
-                    mov eax,ds:[si]
-                    cmp eax,63*1024
-                    JA SAVE1312
-                    mov bx,16
+          mov cs:save13si,si
+          mov cs:save13x,ax
+          mov si,0                
+          mov al,ds:[si]
+          cmp al,'B'
+          JNZ SAVE1312
+          inc si                
+          mov al,ds:[si]
+          cmp al,'M'
+          JNZ SAVE1312
+          inc si                
+          mov eax,ds:[si]
+          cmp eax,63*1024
+          JA SAVE1312
+          mov bx,16
+          clc                
+          add si,bx
+          mov eax,ds:[si]
+          cmp eax,319
+          JA SAVE1312
+          inc si                
+          inc si                
+          inc si                
+          inc si                
+          mov eax,ds:[si]
+          cmp eax,199
+          JA SAVE1312
+          inc si                
+          inc si                
+          inc si                
+          inc si                
+          mov ax,ds:[si]
+          cmp ax,1                
+          JNZ SAVE1312
+          inc si                
+          inc si                
+          mov ax,ds:[si]
+          cmp ax,24
+          JNZ SAVE1312
+          inc si                
+          inc si                
+          mov eax,ds:[si]
+          cmp eax,0
+          JNZ SAVE1312
+          inc si                
+          inc si                
+          inc si                
+          inc si                
+          mov eax,ds:[si]
+          cmp eax,63*1024
+          JA SAVE1312
+          mov cs:save13bit,1
+          mov si,18
+          mov ax,ds:[si]
+          mov cs:save13w,ax
+          cmp ax,2                
+          JZ  SAVE1310
+          cmp ax,4                
+          JZ  SAVE1310
+          cmp ax,8                
+          JZ  SAVE1310
+          cmp ax,16
+          JZ  SAVE1310
+          cmp ax,32
+          JZ  SAVE1310
+          cmp ax,64
+          JZ  SAVE1310
+          cmp ax,128
+          JZ  SAVE1310
+          cmp ax,256
+          JZ  SAVE1310
+          JMP SAVE1311:
+          SAVE1310:
+          mov cs:save13bit,0
+          SAVE1311:
+          mov si,22
+          mov ax,ds:[si]
+          mov cs:save13h,ax
+          mov ax,cs:save13h
+          mov bx,cs:save13w
+          xor dx,dx
+          xor cx,cx
+          clc                
+          mul bx                
+          mov bx,6                
+          clc                
+          add ax,bx
+          mov cs:save1313size,ax
+          mov si,10
+          mov ax,ds:[si]
+          mov cs:save13start,ax
+          mov di,0                
+          mov al,'X'
+          mov es:[di],al
+          inc di                
+          mov al,'Y'
+          mov es:[di],al
+          inc di                
+          mov ax,cs:save13w
+          mov es:[di],ax
+          inc di                
+          inc di                
+          mov ax,cs:save13h
+          mov es:[di],ax
+          mov bh,cs:save13bit
+          mov si,cs:save13start
+          mov di,cs:save1313size
+                          
+                          
+          SAVE1391:
+                    mov ax,cs:save13w
+                    mov cs:save13xcopy,ax 
+                    SAVE1390:
+                              mov al,ds:[si]
+                              inc si                
+                              mov ah,ds:[si]
+                              inc si                
+                              mov bl,ds:[si]
+                              inc si                
+                              and al,11000000b
+                              and ah,11100000b
+                              and bl,11100000b
+                              shr ah,2                
+                              shr bl,5                
+                              or al,ah                
+                              or al,bl                
+                              mov es:[di],al
+                              dec di                
+                              DEC CS:SAVE13XCOPY
+                              CMP CS:SAVE13XCOPY,0
+                              JNZ SAVE1390
                     clc                
-                    add si,bx
-                    mov eax,ds:[si]
-                    cmp eax,319
-                    JA SAVE1312
+                    cmp bh,0                
+                    JZ SAVE1392
                     inc si                
-                    inc si                
-                    inc si                
-                    inc si                
-                    mov eax,ds:[si]
-                    cmp eax,199
-                    JA SAVE1312
-                    inc si                
-                    inc si                
-                    inc si                
-                    inc si                
-                    mov ax,ds:[si]
-                    cmp ax,1                
-                    JNZ SAVE1312
-                    inc si                
-                    inc si                
-                    mov ax,ds:[si]
-                    cmp ax,24
-                    JNZ SAVE1312
-                    inc si                
-                    inc si                
-                    mov eax,ds:[si]
-                    cmp eax,0
-                    JNZ SAVE1312
-                    inc si                
-                    inc si                
-                    inc si                
-                    inc si                
-                    mov eax,ds:[si]
-                    cmp eax,63*1024
-                    JA SAVE1312
-                    mov cs:save13bit,1
-                    mov si,18
-                    mov ax,ds:[si]
-                    mov cs:save13w,ax
-                    cmp ax,2                
-                    JZ  SAVE1310
-                    cmp ax,4                
-                    JZ  SAVE1310
-                    cmp ax,8                
-                    JZ  SAVE1310
-                    cmp ax,16
-                    JZ  SAVE1310
-                    cmp ax,32
-                    JZ  SAVE1310
-                    cmp ax,64
-                    JZ  SAVE1310
-                    cmp ax,128
-                    JZ  SAVE1310
-                    cmp ax,256
-                    JZ  SAVE1310
-                    JMP SAVE1311:
-                    SAVE1310:
-                              mov cs:save13bit,0
-                              SAVE1311:
-                              mov si,22
-                              mov ax,ds:[si]
-                              mov cs:save13h,ax
-                              mov ax,cs:save13h
-                              mov bx,cs:save13w
-                              xor dx,dx
-                              xor cx,cx
-                              clc                
-                              mul bx                
-                              mov bx,6                
-                              clc                
-                              add ax,bx
-                              mov cs:save1313size,ax
-                              mov si,10
-                              mov ax,ds:[si]
-                              mov cs:save13start,ax
-                              mov di,0                
-                              mov al,'X'
-                              mov es:[di],al
-                              inc di                
-                              mov al,'Y'
-                              mov es:[di],al
-                              inc di                
-                              mov ax,cs:save13w
-                              mov es:[di],ax
-                              inc di                
-                              inc di                
-                              mov ax,cs:save13h
-                              mov es:[di],ax
-                              mov bh,cs:save13bit
-                              mov si,cs:save13start
-                              mov di,cs:save1313size
-                                              
-                                              
-                              SAVE1391:
-                                        mov ax,cs:save13w
-                                        mov cs:save13xcopy,ax 
-                                        SAVE1390:
-                                                  mov al,ds:[si]
-                                                  inc si                
-                                                  mov ah,ds:[si]
-                                                  inc si                
-                                                  mov bl,ds:[si]
-                                                  inc si                
-                                                  and al,11000000b
-                                                  and ah,11100000b
-                                                  and bl,11100000b
-                                                  shr ah,2                
-                                                  shr bl,5                
-                                                  or al,ah                
-                                                  or al,bl                
-                                                  mov es:[di],al
-                                                  dec di                
-                                                  DEC CS:SAVE13XCOPY
-                                                            CMP CS:SAVE13XCOPY,0
-                                                                      JNZ SAVE1390
-                                                            clc                
-                                                            cmp bh,0                
-                                                            JZ SAVE1392
-                                                  inc si                
-                                                  SAVE1392:
-                                                            DEC CS:SAVE13H
-                                                                      CMP CS:SAVE13H,0
-                                                                                JNZ SAVE1391
-                                                                                      
-                                                                                      
-                                                                      mov si,cs:save13si
-                                                                      push ds                
-                                                                      mov ax,cs:save13x
-                                                                      mov ds,ax
-                                                                      call creat16
-                                                                      JC SAVE13125
-                                                            mov di,ax
-                                                            mov ax,es
-                                                            mov ds,ax
-                                                            mov si,0                
-                                                            mov cx,cs:save1313size
-                                                            call write16
-                                                            pop ds                 
-                                                            call close16
-                                                            JMP SAVE1313
-                                                  SAVE13125:
-                                                            pop es                
-                                                            pop ds                
-                                                            SAVE1312:
-                                                                      mov ax,0ffffh
-                                                                      SAVE1313:
-                                                                                pop es                
-                                                                                pop ds                
-                                                                                pop bp                
-                                                                                pop si                
-                                                                                pop di                
-                                                                                pop dx                
-                                                                                pop cx                
-                                                                                pop bx                
-                                                                                RET                
+                    SAVE1392:
+                    DEC CS:SAVE13H
+                    CMP CS:SAVE13H,0
+                    JNZ SAVE1391
+                          
+                          
+          mov si,cs:save13si
+          push ds                
+          mov ax,cs:save13x
+          mov ds,ax
+          call creat16
+          JC SAVE13125
+          mov di,ax
+          mov ax,es
+          mov ds,ax
+          mov si,0                
+          mov cx,cs:save1313size
+          call write16
+          pop ds                 
+          call close16
+          JMP SAVE1313
+          SAVE13125:
+          pop es                
+          pop ds                
+          SAVE1312:
+          mov ax,0ffffh
+          SAVE1313:
+          pop es                
+          pop ds                
+          pop bp                
+          pop si                
+          pop di                
+          pop dx                
+          pop cx                
+          pop bx                
+          RET                
                 
                 
                 
